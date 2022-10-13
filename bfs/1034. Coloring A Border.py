@@ -45,7 +45,7 @@ class Solution(object):
                             q.append((rr, cc))
                             visited.add((rr, cc))
                     else:
-                        border.add((r,c))
+                        border.add((r, c))
         for x, y in border:
             grid[x][y] = color
         return grid
