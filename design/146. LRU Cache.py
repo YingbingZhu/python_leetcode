@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-"""
- Created by ZhuYB at 2022/11/7
-"""
-from collections import defaultdict
-
-
 # Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
 #
 # Implement the LRUCache class:
@@ -17,78 +10,51 @@ from collections import defaultdict
 # The functions get and put must each run in O(1) average time complexity.
 
 class Node:
-    def __init__(self, key=None, value=None):
+    def __init__(self, key=None, val=None):
         self.key = key
-        self.value = value
-        self.prev = None
-        self.next = None
+        self.val = val
+        self.prev, self.next = None, None
 
 
-class LRUCache(object):
-    def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
-        self.head = Node()
-        self.tail = Node()
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        # store nodes
-        self.d = defaultdict()
+class LRUCache:
+    def __init__(self, capacity: int):
         self.capacity = capacity
-        self.size = 0
+        self.cache = {}
+        self.head, self.tail = Node(), Node()
+        self.head.next, self.tail.prev = self.tail, self.head
 
-    def get(self, key):
-        """
-        :type key: int
-        :rtype: int
-        """
-        if key not in self.d:
-            return -1
-        self.delete(key)
-        self.add(key, self.d[key].value)
-        return self.d[key].value
+    def remove(self, node):
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
 
-    def put(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: None
-        """
-        if key in self.d:
-            self.delete(key)
-            self.add(key, value)
-            return
-        if self.size == self.capacity:
-            self.delete(self.head.next.key)
-        self.add(key, value)
-
-    def add(self, key, value):
-        node = Node(key, value)
+    def insert(self, node):
+        self.tail.prev.next = node
         node.prev = self.tail.prev
         node.next = self.tail
-        self.tail.prev.next = node
         self.tail.prev = node
-        self.d[key] = node
-        self.size += 1
 
-    def delete(self, key):
-        """
-        delete note
-        :param key:
-        :return:
-        """
-        node = self.d[key]
-        del self.d[key]
-        node.prev.next = node.next
-        node.next.prev = node.prev
-        self.size -= 1
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self.remove(node)
+        self.insert(node)
+        return node.val
 
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.remove(self.cache[key])
+        self.cache[key] = Node(key, value)
+        self.insert(self.cache[key])
 
-
-
+        if len(self.cache) > self.capacity:
+            lru = self.head.next
+            self.remove(lru)
+            del self.cache[lru.key]
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
+
+
