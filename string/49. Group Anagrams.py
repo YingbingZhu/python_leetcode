@@ -6,7 +6,6 @@ class Solution(object):
         """
         d = {}
         for s in strs:
-            curr = []
             sortedS = ''.join(sorted(s))
             if sortedS not in d:
                 d[sortedS] = [s]
