@@ -11,7 +11,9 @@ import heapq
 #
 # SmallestInfiniteSet() Initializes the SmallestInfiniteSet object to contain all positive integers.
 # int popSmallest() Removes and returns the smallest integer contained in the infinite set.
-# void addBack(int num) Adds a positive integer num back into the infinite set, if it is not already in the infinite set.
+# void addBack(int num) Adds a positive integer num back into the infinite set,
+# if it is not already in the infinite set.
+
 
 class SmallestInfiniteSet(object):
 
@@ -25,8 +27,9 @@ class SmallestInfiniteSet(object):
         """
         num = heapq.heappop(self.minHeap)
         self.popped.add(num)
+
         next_smallest = num + 1
-        if not self.minHeap or (self.minHeap[0] != next_smallest):
+        if not self.minHeap or ((next_smallest not in self.popped) and (self.minHeap[0] != next_smallest)):
             heapq.heappush(self.minHeap, next_smallest)
 
         return num
@@ -36,6 +39,9 @@ class SmallestInfiniteSet(object):
         :type num: int
         :rtype: None
         """
+        if num in self.popped:
+            heapq.heappush(self.minHeap, num)
+            self.popped.remove(num)
 
 
 # Your SmallestInfiniteSet object will be instantiated and called as such:
