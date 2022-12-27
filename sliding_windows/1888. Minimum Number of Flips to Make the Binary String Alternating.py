@@ -26,7 +26,24 @@ class Solution(object):
                     even += 1
                 else:
                     odd += 1
+        # two options: even 1 (odd + n//2 - even) or odd 1 ()
         if len(s) % 2 == 0:
-            return len(s) // 2 - max(even, odd)
+            return min(odd + len(s)//2 - even, even + len(s)//2 - odd)
+
+        # if first digit is 1, even -= 1; odd += 1;
+        else:
+            res = min(odd + len(s)//2 + 1 - even, even + len(s)//2 - odd)
+            for i in range(len(s)):
+                if s[i] == '1':
+                    even, odd = odd + 1, even - 1
+                    res = min(res, min(odd + len(s)//2 + 1 - even, even + len(s)//2 - odd))
+                else:
+                    even, odd = odd, even
+                    res = min(res, min(odd + len(s) // 2 + 1 - even, even + len(s) // 2 - odd))
+
+        return res
+
+
+
 
 

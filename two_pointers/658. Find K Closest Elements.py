@@ -2,6 +2,8 @@
 """
  Created by ZhuYB at 2022/9/29
 """
+
+
 # Given a sorted integer array arr, two integers k and x,
 # return the k closest integers to x in the array. The result should also be sorted in ascending order.
 #
@@ -26,8 +28,8 @@ class Solution(object):
         while l < r:
             m = (l + r) // 2
             # x is closer to arr[m+k]
-            if x - arr[m] > arr[m+k] - x:
+            if x - arr[m] > arr[m + k] - x:
                 l = m + 1
             else:
                 r = m
-        return arr[l:l+k]
+        return arr[l:l + k]
