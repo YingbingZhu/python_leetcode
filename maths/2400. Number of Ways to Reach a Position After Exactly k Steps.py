@@ -12,7 +12,7 @@
 # Two ways are considered different if the order of the steps made is not exactly the same.
 #
 # Note that the number line includes negative integers.
-from math import comb
+from maths import comb
 
 
 class Solution(object):
