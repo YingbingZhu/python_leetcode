@@ -36,3 +36,20 @@ class Solution(object):
 
                     trees.append(curr_root)
         return trees
+    
+# class Solution:
+#     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
+
+#         @cache
+#         def generate_trees(l, r):
+#             if l > r:
+#                 return [None]
+            
+#             cur = []
+#             for i in range(l, r+1):
+#                 for left in generate_trees(l, i-1):
+#                     for right in generate_trees(i+1, r):
+#                         cur.append(TreeNode(i, left, right))
+#             return cur
+        
+#         return generate_trees(1, n)
