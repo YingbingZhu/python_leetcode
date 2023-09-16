@@ -49,6 +49,21 @@ class Solution(object):
         print(res)
         return res
 
+    # @lru_cache(sum(nums))
+    # def backtrack(remain):
+    #     if remain == 0:
+    #         return 1
+    #     elif remain < 0:
+    #         return 0s
+    #     cnt = 0
+    #     for i in range(len(nums)):
+    #         remain -= nums[i]
+    #         cnt += backtrack(remain)
+    #         remain += nums[i]
+    #     return cnt
+    #
+    # return backtrack(target)
+
 
 if __name__ == "__main__":
     s = Solution()
