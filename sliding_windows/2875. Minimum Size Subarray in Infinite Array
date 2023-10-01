@@ -1,0 +1,28 @@
+class Solution:
+    def minSizeSubarray(self, nums: List[int], target: int) -> int:
+
+        res = float('inf')
+        infLen = 2 * len(nums)
+        infSum = sum(nums)
+        while infSum < target:
+            infLen += len(nums)
+            infSum += sum(nums)
+
+        # sliding window
+        start = 0
+        curSum = 0
+        for end in range(infLen):
+            curSum += nums[end % len(nums)]
+            while curSum > target:
+                curSum -= nums[start % len(nums)]
+                start += 1
+            if curSum == target:
+                res = min(res, end - start + 1)
+
+        while curSum > target:
+            curSum -= nums[start % len(nums)]
+            start += 1
+        if curSum == target:
+            res = min(res, end - start + 1)
+
+        return -1 if res == float('inf') else res
