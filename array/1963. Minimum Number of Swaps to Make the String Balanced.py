@@ -36,6 +36,22 @@ class Solution(object):
 
         # length of stack is number of not-paired brackets
         return len(stack) // 4 + len(stack) % 4
+    
+
+        # Solution 2
+        # ]]][[[]]  [-1, -2, -3, -2, -1, 0, -1, -2]
+        # each swap, at most decrese imbalance by 2
+        # take leftmost ] and rightmost [
+        # [1, ....]
+        bal = 0
+        ans = 0
+        for symbol in s:
+            if symbol == "[":
+                bal += 1
+            else:
+                bal -= 1
+            ans = min(ans, bal)
+        return (-ans+1)//2
 
 
 
